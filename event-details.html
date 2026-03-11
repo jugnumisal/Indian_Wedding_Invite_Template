@@ -450,6 +450,11 @@
 
     // ===== Access helpers =====
     function getUserEventAccess() {
+      // For template demo: show all events by default
+      return ['haldi','sangeet','wedding'];
+      
+      // Uncomment below for production with authentication:
+      /*
       const s = localStorage.getItem('wedding_user_info');
       if (!s) return [];
       try {
@@ -457,6 +462,7 @@
         if (u.permissions && u.permissions.includes('admin')) return ['haldi','sangeet','wedding'];
         return u.eventAccess || u.event_access || [];
       } catch { return []; }
+      */
     }
     function getAccessibleEvents() {
       const allowed = getUserEventAccess();
@@ -659,10 +665,14 @@
 
     // ===== Init =====
     document.addEventListener('DOMContentLoaded', ()=>{
-      // Auth required
+      // For template demo: skip auth check
+      // Uncomment below for production:
+      /*
       if (!localStorage.getItem('wedding_user_info')) {
         window.location.href = 'index.html'; return;
       }
+      */
+      
       const ids = renderStages();
       setupCurtains();
       setupTabs(ids);
