@@ -21,7 +21,11 @@ class AnimatedFavicon {
         
         // Update title with rotating earth emoji after #LoremIpsum
         const baseTitle = '#LoremIpsum';
-        document.title = `${baseTitle} ${this.frames[this.currentFrame]}`;
+        // Force update to clear any cached titles
+        document.title = '';
+        setTimeout(() => {
+            document.title = `${baseTitle} ${this.frames[this.currentFrame]}`;
+        }, 10);
         
         this.currentFrame = (this.currentFrame + 1) % this.frames.length;
         

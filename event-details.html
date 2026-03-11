@@ -517,9 +517,6 @@
       }
       root.innerHTML = events.map(stageHTML).join('') + `<div class="wave" aria-hidden="true"></div>`;
       
-      // Apply translation to newly rendered content
-      }
-      
       return events.map(e=>e.id);
     }
 
@@ -677,9 +674,6 @@
       setupCurtains();
       setupTabs(ids);
       handleDeepLink();
-      
-      // Apply translation if Hindi is selected
-      }
     });
 
     window.addEventListener('hashchange', handleDeepLink);
@@ -690,9 +684,6 @@
         const ids = renderStages();
         setupCurtains();
         setupTabs(ids);
-        
-        // Apply translation if Hindi is selected
-        }
       }
     });
   </script>
