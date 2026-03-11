@@ -455,7 +455,7 @@
       try {
         const u = JSON.parse(s);
         if (u.permissions && u.permissions.includes('admin')) return ['haldi','sangeet','wedding'];
-        return u.eventAccess || [];
+        return u.eventAccess || u.event_access || [];
       } catch { return []; }
     }
     function getAccessibleEvents() {
