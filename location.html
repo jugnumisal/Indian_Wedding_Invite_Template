@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#LoremIpsum</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">#LoremIpsum</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item access-required" data-access="family,friends,admin" style="display: none;">
+                    <a href="event-details.html" class="nav-link">Event Details</a>
+                </li>
+
+                <li class="nav-item access-required" data-access="family,friends,admin" style="display: none;">
+                    <a href="location.html" class="nav-link active">Location</a>
+                </li>
+                <li class="nav-item access-code-item">
+                    <button class="access-code-btn" onclick="showAccessModal()">Enter Access Code</button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 80px;">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Venue & Travel Information</h1>
+                <p>Everything you need to know about getting to our wedding</p>
+            </div>
+        </section>
+
+        <!-- Venue Section -->
+        <section class="venue-section">
+            <div class="container">
+                <div class="venue-content">
+                    <div class="venue-info">
+                        <h2>Wedding Venue</h2>
+                        <div class="venue-details">
+                            <div class="detail-item">
+                                <strong>Address:</strong>
+                                <p>123 Wedding Avenue<br>
+                                Downtown, CA 90210</p>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Phone:</strong>
+                                <p>(555) 987-6543</p>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Website:</strong>
+                                <p><a href="#" target="_blank">www.grandballroom.com</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="venue-description">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
+                        </div>
+
+                        <div class="directions-buttons">
+                            <a href="https://maps.google.com/?q=123+Wedding+Avenue+Downtown+CA+90210" target="_blank" class="btn-primary">Get Directions</a>
+                            <a href="#" onclick="copyAddress()" class="btn-secondary">Copy Address</a>
+                        </div>
+                    </div>
+                    <div class="venue-image">
+                        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1998&q=80" alt="Grand Ballroom venue" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <div class="container">
+                <h2>Find Us Here</h2>
+                <div class="map-container">
+                    <!-- Placeholder for map - in a real implementation, you'd use Google Maps API -->
+                    <div class="map-placeholder">
+                        <div class="map-content">
+                            <h3>Interactive Map</h3>
+                            <p>Click below to view directions and explore the area</p>
+                            <a href="https://maps.google.com/?q=123+Wedding+Avenue+Downtown+CA+90210" target="_blank" class="map-btn">View on Google Maps</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transportation Section -->
+        <section class="transportation-section">
+            <div class="container">
+                <h2>Getting There</h2>
+                <div class="transport-grid">
+                    <div class="transport-card">
+                        <h3>🚗 By Car</h3>
+                        <p><strong>From the North:</strong> Take Highway 101 South to Exit 15 (Downtown). Turn right on Main Street, then left on Wedding Avenue.</p>
+                        <p><strong>From the South:</strong> Take Highway 101 North to Exit 15 (Downtown). Turn left on Main Street, then left on Wedding Avenue.</p>
+                        <p><strong>Parking:</strong> Complimentary valet parking available. Self-parking lot adjacent to venue.</p>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h3>✈️ By Air</h3>
+                        <p><strong>Nearest Airport:</strong> Downtown Regional Airport (DRA) - 15 minutes</p>
+                        <p><strong>Major Airport:</strong> Metropolitan International (MIA) - 45 minutes</p>
+                        <p><strong>Transportation:</strong> Taxi, Uber/Lyft, or rental car available from both airports.</p>
+                    </div>
+                    
+                    <div class="transport-card">
+                        <h3>🚊 Public Transit</h3>
+                        <p><strong>Metro Line:</strong> Blue Line to Downtown Station (2 blocks from venue)</p>
+                        <p><strong>Bus Routes:</strong> Routes 15, 22, and 45 stop within 3 blocks</p>
+                        <p><strong>Taxi/Rideshare:</strong> Uber and Lyft readily available in the area</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accommodations Section -->
+        <section class="accommodations-section">
+            <div class="container">
+                <h2>Where to Stay</h2>
+                <p class="accommodations-intro">We've reserved room blocks at these nearby hotels for your convenience. Please book early to secure our special rates.</p>
+                
+                <div class="hotels-grid">
+                    <div class="hotel-card">
+                        <div class="hotel-image">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Downtown Luxury Hotel" />
+                        </div>
+                        <div class="hotel-info">
+                            <h3>Lorem Ipsum Dolor</h3>
+                            <p class="hotel-distance">0.2 miles from venue</p>
+                            <div class="hotel-details">
+                                <p><strong>Address:</strong> 100 Main Street, Downtown, CA 90210</p>
+                                <p><strong>Phone:</strong> (555) 111-2222</p>
+                                <p><strong>Group Rate:</strong> $189/night</p>
+                                <p><strong>Amenities:</strong> Pool, Spa, Fitness Center, Restaurant</p>
+                                <p><strong>Booking Deadline:</strong> May 15, 2025</p>
+                            </div>
+                            <a href="#" class="hotel-btn">Book Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="hotel-card">
+                        <div class="hotel-image">
+                            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Garden Inn & Suites" />
+                        </div>
+                        <div class="hotel-info">
+                            <h3>Lorem Ipsum & Dolor</h3>
+                            <p class="hotel-distance">0.5 miles from venue</p>
+                            <div class="hotel-details">
+                                <p><strong>Address:</strong> 250 Garden Boulevard, Downtown, CA 90210</p>
+                                <p><strong>Phone:</strong> (555) 333-4444</p>
+                                <p><strong>Group Rate:</strong> $139/night</p>
+                                <p><strong>Amenities:</strong> Free Breakfast, Pool, Business Center</p>
+                                <p><strong>Booking Deadline:</strong> May 15, 2025</p>
+                            </div>
+                            <a href="#" class="hotel-btn">Book Now</a>
+                        </div>
+                    </div>
+                    
+                    <div class="hotel-card">
+                        <div class="hotel-image">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Budget Stay Motel" />
+                        </div>
+                        <div class="hotel-info">
+                            <h3>Consectetur Adipiscing</h3>
+                            <p class="hotel-distance">1.2 miles from venue</p>
+                            <div class="hotel-details">
+                                <p><strong>Address:</strong> 500 Budget Lane, Downtown, CA 90210</p>
+                                <p><strong>Phone:</strong> (555) 555-6666</p>
+                                <p><strong>Group Rate:</strong> $89/night</p>
+                                <p><strong>Amenities:</strong> Free WiFi, Continental Breakfast, Parking</p>
+                                <p><strong>Booking Deadline:</strong> May 15, 2025</p>
+                            </div>
+                            <a href="#" class="hotel-btn">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Local Attractions Section -->
+        <section class="attractions-section">
+            <div class="container">
+                <h2>Things to Do</h2>
+                <p>Make the most of your visit! Here are some local attractions and activities to explore:</p>
+                
+                <div class="attractions-grid">
+                    <div class="attraction-card">
+                        <h3>🎨 Downtown Art Museum</h3>
+                        <p>World-class art collection featuring contemporary and classical works. Open daily 10am-6pm.</p>
+                    </div>
+                    <div class="attraction-card">
+                        <h3>🌳 Riverside Park</h3>
+                        <p>Beautiful waterfront park perfect for morning walks or picnics. Features walking trails and scenic views.</p>
+                    </div>
+                    <div class="attraction-card">
+                        <h3>🍷 Wine District</h3>
+                        <p>Historic district with wine bars, tasting rooms, and boutique shops. Just 10 minutes from the venue.</p>
+                    </div>
+                    <div class="attraction-card">
+                        <h3>🏛️ Historic Downtown</h3>
+                        <p>Charming historic district with unique shops, cafes, and restaurants. Perfect for afternoon strolling.</p>
+                    </div>
+                    <div class="attraction-card">
+                        <h3>🎭 Theater District</h3>
+                        <p>Catch a show at one of the many theaters featuring Broadway productions and local performances.</p>
+                    </div>
+                    <div class="attraction-card">
+                        <h3>🍴 Foodie Scene</h3>
+                        <p>Award-winning restaurants ranging from casual cafes to fine dining. Don't miss the famous farmers market!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Lorem & Ipsum Dolor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="animated-favicon.js"></script>
+    <script src="secure-auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function copyAddress() {
+            const address = "123 Wedding Avenue, Downtown, CA 90210";
+            navigator.clipboard.writeText(address).then(function() {
+                // Show success message
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = "Copied!";
+                btn.style.background = "#28a745";
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = "";
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+                // Fallback for older browsers
+                alert("Address: 123 Wedding Avenue, Downtown, CA 90210");
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+service: wedding-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: ${opt:stage, 'prod'}
+  tags:
+    auto-delete: "no"
+  apiGateway:
+    binaryMediaTypes:
+      - 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  environment:
+    NODE_ENV: production
+    DB_HOST: ${env:DB_HOST}
+    DB_PORT: ${env:DB_PORT}
+    DB_NAME: ${env:DB_NAME}
+    DB_USER: ${env:DB_USER}
+    DB_PASSWORD: ${env:DB_PASSWORD}
+    DB_SSL: true
+    SES_FROM_EMAIL: ${env:SES_FROM_EMAIL}
+    SES_REPLY_TO_EMAIL: ${env:SES_REPLY_TO_EMAIL}
+    SNS_FROM_NUMBER: ${env:SNS_FROM_NUMBER}
+    TWILIO_ACCOUNT_SID: ${env:TWILIO_ACCOUNT_SID}
+    TWILIO_AUTH_TOKEN: ${env:TWILIO_AUTH_TOKEN}
+    TWILIO_MESSAGING_SERVICE_SID: ${env:TWILIO_MESSAGING_SERVICE_SID}
+    TWILIO_WHATSAPP_FROM: ${env:TWILIO_WHATSAPP_FROM}
+    TWILIO_TEMPLATE_SID: ${env:TWILIO_TEMPLATE_SID}
+  
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - rds:DescribeDBInstances
+        - rds:DescribeDBClusters
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+        - ses:SendRawEmail
+        - ses:GetSendQuota
+        - ses:GetSendStatistics
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - sns:Publish
+        - sns:GetSMSAttributes
+        - sns:SetSMSAttributes
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - ec2:CreateNetworkInterface
+        - ec2:DescribeNetworkInterfaces
+        - ec2:DeleteNetworkInterface
+        - ec2:CreateVpcEndpoint
+        - ec2:DescribeVpcEndpoints
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: "*"
+
+functions:
+  api:
+    handler: lambda-handler.handler
+    timeout: 60
+    package:
+      patterns:
+        - 'node_modules/@aws-sdk/client-ses/**'
+        - 'node_modules/@aws-sdk/client-lambda/**'
+        - 'node_modules/@smithy/**'
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors:
+            origins:
+              - 'https://your-domain.com'
+              - 'http://localhost:3000'
+            headers:
+              - Content-Type
+              - Authorization
+              - Origin
+              - Accept
+              - X-Requested-With
+            allowCredentials: true
+            maxAge: 86400
+      - http:
+          path: /
+          method: ANY
+          cors:
+            origins:
+              - 'https://your-domain.com'
+              - 'http://localhost:3000'
+            headers:
+              - Content-Type
+              - Authorization
+              - Origin
+              - Accept
+              - X-Requested-With
+            allowCredentials: true
+            maxAge: 86400
+    vpc:
+      securityGroupIds:
+        - ${env:VPC_SECURITY_GROUP_ID}
+      subnetIds:
+        - ${env:VPC_SUBNET_ID_1}
+        - ${env:VPC_SUBNET_ID_2}
+  
+  emailSender:
+    handler: email-lambda.handler
+    timeout: 30
+  
+  blessingNotificationSender:
+    handler: blessing-notification-lambda.handler
+    timeout: 30
+    tags:
+      auto-delete: "no"
+  
+  whatsappSender:
+    handler: whatsapp-lambda.handler
+    timeout: 30
+    tags:
+      auto-delete: "no"
+    package:
+      patterns:
+        - 'whatsapp-lambda.js'
+        - 'whatsapp-service.js'
+        - 'node_modules/twilio/**'
+        - 'node_modules/axios/**'
+        - '!**/*.md'
+        - '!**/test/**'
+  
+  whatsappInboundHandler:
+    handler: whatsapp-inbound-handler.handler
+    timeout: 30
+    tags:
+      auto-delete: "no"
+    events:
+      - http:
+          path: /webhooks/whatsapp/inbound
+          method: POST
+    vpc:
+      securityGroupIds:
+        - ${env:VPC_SECURITY_GROUP_ID}
+      subnetIds:
+        - ${env:VPC_SUBNET_ID_1}
+        - ${env:VPC_SUBNET_ID_2}
+  
+  blessingsHandler:
+    handler: blessings-lambda.handler
+    timeout: 30
+    tags:
+      auto-delete: "no"
+    environment:
+      EMAIL_SENDER_FUNCTION: ${self:service}-${self:provider.stage}-blessingNotificationSender
+    events:
+      - http:
+          path: /blessings/{proxy+}
+          method: ANY
+          cors:
+            origins:
+              - 'https://your-domain.com'
+              - 'http://localhost:3000'
+              - '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - Origin
+              - Accept
+              - X-Requested-With
+            allowCredentials: false
+            maxAge: 86400
+    vpc:
+      securityGroupIds:
+        - ${env:VPC_SECURITY_GROUP_ID}
+      subnetIds:
+        - ${env:VPC_SUBNET_ID_1}
+        - ${env:VPC_SUBNET_ID_2}
+
+package:
+  individually: true
+  excludeDevDependencies: true
+  patterns:
+    - '!.git/**'
+    - '!.env*'
+    - '!*.md'
+    - '!test-*.js'
+    - '!Photos/**'
+    - '!Borders/**'
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 3001

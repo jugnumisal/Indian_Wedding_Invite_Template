@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum - #LoremIpsum</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Open+Sans:wght@300;400;600&family=Noto+Sans+Devanagari:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hearts Waterfall Container -->
+    <div class="hearts-container"></div>
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav show" id="stickyNav" aria-label="Primary">
+        <div class="hero-nav-inner">
+            <div class="hero-nav-left">
+                <a href="index.html" class="brand-link" onclick="handleBrandClick(event)">
+                    <img src="logo-gif.gif" alt="Wedding Logo" class="nav-logo-gif">
+                    <h1 class="brand-title">#LoremIpsum</h1>
+                </a>
+            </div>
+            
+            <div class="hero-nav-center">
+                <ul class="hero-nav-list">
+                    <li><a class="hero-nav-link" href="index.html" onclick="handleHomeClick(event)">Home</a></li>
+                    <li><a class="hero-nav-link is-active" href="family.html" onclick="return handleFamilyClick(event)">Family</a></li>
+                    <li class="access-required" data-access="guest" style="display:none;">
+                        <a class="hero-nav-link" href="event-details.html">Event Details</a>
+                    </li>
+                    <li class="access-required" data-access="admin" style="display:none;">
+                        <a class="hero-nav-link" href="admin-guests.html">Admin</a>
+                    </li>
+                    <li class="mobile-only-item access-code-item" style="display:none;">
+                        <button onclick="pageAccess.showAuthModal(); toggleMobileMenu(); return false;">Enter Invite Code</button>
+                    </li>
+                </ul>
+                
+                <!-- Mobile Hamburger Menu -->
+                <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <div class="hero-nav-right">
+                <button class="invite-code-btn access-code-item" onclick="pageAccess.showAuthModal(); return false;">
+                    Enter Invite Code
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 100px;">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Meet Our Families</h1>
+                <p>The wonderful people who shaped our lives and brought us together</p>
+                
+                <!-- Toggle Switch -->
+                <div class="family-toggle-container">
+                    <input type="checkbox" id="familySwitch" onchange="toggleFamily()">
+                    <label for="familySwitch" class="toggle-switch">
+                        <span class="toggle-option">Groom's Family</span>
+                        <span class="toggle-option">Bride's Family</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Groom's Family Section -->
+        <div id="groom-family" class="family-content active">
+        <section class="family-section">
+            <div class="container">
+                <h2 class="section-title">The Groom's Family</h2>
+                
+                <div class="family-grid">
+                    <!-- Family Introduction -->
+                    <div class="family-member">
+                        <div class="member-photo">
+                            <img src="Photos/Groomfamily.jpg" alt="The Does">
+                        </div>
+                        <div class="member-info">
+                            <h4 class="member-names">The Does Family</h4>
+                            <h5 class="member-subtitle">A family built on love and tradition</h5>
+                            <p class="member-description">
+                                Meet the wonderful family that raised and shaped the groom into the amazing person he is today.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Parents -->
+                    <div class="family-member">
+                        <div class="member-photo">
+                            <img src="Photos/groom-parents.jpeg" alt="Groom's Parents">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-relation">Parents</h3>
+                            <h4 class="member-names">Father's Name</h4>
+                            <h5 class="member-subtitle">A pillar of strength and wisdom.</h5>
+                            <p class="member-description">
+                                A brief description of the groom's father - his profession, personality, and role in the family.
+                            </p>
+                            <h4 class="member-names">Mother's Name</h4>
+                            <h5 class="member-subtitle">The heart and soul of the family.</h5>
+                            <p class="member-description">
+                                A brief description of the groom's mother - her warmth, talents, and the love she brings to the family.
+                            </p>
+                            <img src="Borders/text-partition.svg" alt="Separator" style="width: 100%; max-width: 300px; margin: 1.5rem auto; display: block;">
+                            <p class="member-description" style="font-weight: bold;">
+                                Together, they've built a home filled with love, laughter, and cherished memories.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Siblings -->
+                    <div class="family-member reverse">
+                        <div class="member-photo">
+                            <img src="Photos/groom-sibling.jpeg" alt="Groom's Siblings">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-relation">Siblings</h3>
+                            <h4 class="member-names">Sibling Name</h4>
+                            <h5 class="member-subtitle">The supportive brother/sister.</h5>
+                            <p class="member-description">
+                            A brief description of the groom's sibling - their bond, personality, and special relationship.
+                            </p>
+                            <img src="Borders/text-partition.svg" alt="Separator" style="width: 100%; max-width: 300px; margin: 1.5rem auto; display: block;">
+                            <h4 class="member-names">Sibling Name</h4>
+                            <h5 class="member-subtitle">The caring brother/sister.</h5>
+                            <p class="member-description">
+                            A brief description of another sibling and their unique role in the family.</p>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Paternal Grandparents -->
+                    <div class="family-member">
+                        <div class="member-photo">
+                            <img src="Photos/groom-paternal-GP.jpeg" alt="Paternal Grandparents">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-relation">Paternal Grandparents</h3>
+                            <h4 class="member-names">Grandfather's Name <br>&<br> Grandmother's Name</h4>
+                            <p class="member-description">
+                                The wise and loving paternal grandparents who have been a guiding light for the family.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Maternal Grandparents -->
+                    <div class="family-member reverse">
+                        <div class="member-photo">
+                            <img src="Photos/groom-maternal-GP.jpeg" alt="Maternal Grandparents">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-relation">Maternal Grandparents</h3>
+                            <h4 class="member-names">Grandfather's Name <br>&<br> Grandmother's Name</h4>
+                            <p class="member-description">
+                                The cherished maternal grandparents whose love and blessings have enriched the family.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        <!-- Bride's Family Section -->
+        <div id="bride-family" class="family-content">
+        <section class="family-section" style="background: #f8f9fa;">
+        <section class="family-section" style="background: #f8f9fa;">
+            <div class="container">
+                <h2 class="section-title">The Bride's Family</h2>
+                
+                <div class="family-grid">
+                    <!-- Family Introduction -->
+                    <div class="family-member">
+                        <div class="member-photo">
+                            <img src="Photos/Bridefamily.jpeg" alt="The Smiths">
+                        </div>
+                        <div class="member-info">
+                            <h4 class="member-names">The Smiths Family</h4>
+                            <h5 class="member-subtitle">A family built on love and tradition</h5>
+                            <p class="member-description">
+                                Meet the wonderful family that raised and shaped the bride into the amazing person she is today.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Parents -->
+                    <div class="family-member">
+                        <div class="member-photo">
+                            <img src="Photos/bride-parents.jpg" alt="Bride's Parents">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-relation">Parents</h3>
+                            <h4 class="member-names">Father's Name</h4>
+                            <h5 class="member-subtitle">A pillar of strength and wisdom.</h5>
+                            <p class="member-description">
+                                A brief description of the bride's father - his profession, personality, and role in the family.
+                            </p>
+                            <h4 class="member-names">Mother's Name</h4>
+                            <h5 class="member-subtitle">The heart and soul of the family.</h5>
+                            <p class="member-description">
+                                A brief description of the bride's mother - her warmth, talents, and the love she brings to the family.
+                            </p>
+                            <img src="Borders/text-partition.svg" alt="Separator" style="width: 100%; max-width: 300px; margin: 1.5rem auto; display: block;">
+                            <p class="member-description" style="font-weight: bold;">
+                                Together, they've built a home filled with love, laughter, and cherished memories.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Siblings -->
+                    <div class="family-member reverse">
+                        <div class="member-photo">
+                            <img src="Photos/bride-sibling.jpeg" alt="Bride's Siblings">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-relation">Siblings</h3>
+                            <h4 class="member-names">Sibling Name</h4>
+                            <h5 class="member-subtitle">The supportive brother/sister.</h5>
+                            <p class="member-description">
+                                A brief description of the bride's sibling - their bond, personality, and special relationship.
+                            </p>
+                            <img src="Borders/text-partition.svg" alt="Separator" style="width: 100%; max-width: 300px; margin: 1.5rem auto; display: block;">
+                            <h4 class="member-names">Sibling Name</h4>
+                            <h5 class="member-subtitle">The caring brother/sister.</h5>
+                            <p class="member-description">
+                                A brief description of another sibling and their unique role in the family.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Paternal Grandparents -->
+                    <div class="family-member">
+                        <div class="member-photo">
+                            <img src="Photos/bride-paternal-GP.jpeg" alt="Paternal Grandparents">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-relation">Paternal Grandparents</h3>
+                            <h4 class="member-names">Grandfather's Name <br>&<br> Grandmother's Name</h4>
+                            <p class="member-description">
+                                The wise and loving paternal grandparents who have been a guiding light for the family.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Maternal Grandparents -->
+                    <div class="family-member reverse">
+                        <div class="member-photo">
+                            <img src="Photos/bride-maternal-GP.jpeg" alt="Maternal Grandparents">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-relation">Maternal Grandparents</h3>
+                            <h4 class="member-names">Grandfather's Name <br>&<br> Grandmother's Name</h4>
+                            <p class="member-description">
+                                The cherished maternal grandparents whose love and blessings have enriched the family.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        <!-- Family Values Section -->
+        <section class="family-values-section">
+            <div class="container">
+                <h2 class="section-title">Family Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">💕</div>
+                        <h3>Love & Compassion</h3>
+                        <p>Treating everyone with kindness, empathy, and unconditional love in all that we do.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🙏</div>
+                        <h3>Respect & Tradition</h3>
+                        <p>Honoring our heritage, respecting our elders, and cherishing the traditions passed down through generations.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🤝</div>
+                        <h3>Unity & Support</h3>
+                        <p>Standing together through thick and thin, supporting each other's dreams and celebrating every milestone.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">✨</div>
+                        <h3>Joy & Gratitude</h3>
+                        <p>Finding happiness in simple moments and being grateful for the blessings we share as a family.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <!-- Blossoming Flowers Section -->
+        <div class="flowers-garden not-loaded">
+            <div class="flowers">
+                <div class="flower flower--1">
+                    <div class="flower__leafs flower__leafs--1">
+                        <div class="flower__leaf flower__leaf--1"></div>
+                        <div class="flower__leaf flower__leaf--2"></div>
+                        <div class="flower__leaf flower__leaf--3"></div>
+                        <div class="flower__leaf flower__leaf--4"></div>
+                        <div class="flower__white-circle"></div>
+                        <div class="flower__light flower__light--1"></div>
+                        <div class="flower__light flower__light--2"></div>
+                        <div class="flower__light flower__light--3"></div>
+                        <div class="flower__light flower__light--4"></div>
+                        <div class="flower__light flower__light--5"></div>
+                        <div class="flower__light flower__light--6"></div>
+                        <div class="flower__light flower__light--7"></div>
+                        <div class="flower__light flower__light--8"></div>
+                    </div>
+                    <div class="flower__line">
+                        <div class="flower__line__leaf flower__line__leaf--1"></div>
+                        <div class="flower__line__leaf flower__line__leaf--2"></div>
+                        <div class="flower__line__leaf flower__line__leaf--3"></div>
+                        <div class="flower__line__leaf flower__line__leaf--4"></div>
+                        <div class="flower__line__leaf flower__line__leaf--5"></div>
+                        <div class="flower__line__leaf flower__line__leaf--6"></div>
+                    </div>
+                </div>
+                <div class="flower flower--2">
+                    <div class="flower__leafs flower__leafs--2">
+                        <div class="flower__leaf flower__leaf--1"></div>
+                        <div class="flower__leaf flower__leaf--2"></div>
+                        <div class="flower__leaf flower__leaf--3"></div>
+                        <div class="flower__leaf flower__leaf--4"></div>
+                        <div class="flower__white-circle"></div>
+                        <div class="flower__light flower__light--1"></div>
+                        <div class="flower__light flower__light--2"></div>
+                        <div class="flower__light flower__light--3"></div>
+                        <div class="flower__light flower__light--4"></div>
+                        <div class="flower__light flower__light--5"></div>
+                        <div class="flower__light flower__light--6"></div>
+                        <div class="flower__light flower__light--7"></div>
+                        <div class="flower__light flower__light--8"></div>
+                    </div>
+                    <div class="flower__line">
+                        <div class="flower__line__leaf flower__line__leaf--1"></div>
+                        <div class="flower__line__leaf flower__line__leaf--2"></div>
+                        <div class="flower__line__leaf flower__line__leaf--3"></div>
+                        <div class="flower__line__leaf flower__line__leaf--4"></div>
+                    </div>
+                </div>
+                <div class="flower flower--3">
+                    <div class="flower__leafs flower__leafs--3">
+                        <div class="flower__leaf flower__leaf--1"></div>
+                        <div class="flower__leaf flower__leaf--2"></div>
+                        <div class="flower__leaf flower__leaf--3"></div>
+                        <div class="flower__leaf flower__leaf--4"></div>
+                        <div class="flower__white-circle"></div>
+                        <div class="flower__light flower__light--1"></div>
+                        <div class="flower__light flower__light--2"></div>
+                        <div class="flower__light flower__light--3"></div>
+                        <div class="flower__light flower__light--4"></div>
+                        <div class="flower__light flower__light--5"></div>
+                        <div class="flower__light flower__light--6"></div>
+                        <div class="flower__light flower__light--7"></div>
+                        <div class="flower__light flower__light--8"></div>
+                    </div>
+                    <div class="flower__line">
+                        <div class="flower__line__leaf flower__line__leaf--1"></div>
+                        <div class="flower__line__leaf flower__line__leaf--2"></div>
+                        <div class="flower__line__leaf flower__line__leaf--3"></div>
+                        <div class="flower__line__leaf flower__line__leaf--4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-content">
+            <p class="copyright">&copy; 2025 Lorem & Ipsum Dolor. All rights reserved.</p>
+            <p class="made-with">Made with and for ❤️ by Lorem</p>
+        </div>
+    </footer>
+
+    <script src="animated-favicon.js"></script>
+    <script src="secure-auth.js"></script>
+    <script src="rsvp-ui.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navCenter = document.querySelector('.hero-nav-center');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            
+            navCenter.classList.toggle('mobile-menu-open');
+            menuToggle.classList.toggle('active');
+        }
+
+        // Hearts Waterfall Effect
+        const heartsContainer = document.querySelector('.hearts-container');
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const leftPosition = Math.random() * window.innerWidth;
+            heart.style.left = `${leftPosition}px`;
+            heart.style.animationDelay = `-${Math.random() * 5}s`;
+            const size = Math.floor(Math.random() * 20) + 10;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            const halfSize = size / 2;
+
+            // dynamically generate pseudo-element sizing
+            const style = document.createElement('style');
+            style.textContent = `
+                .heart[style*="width: ${size}px"]::before,
+                .heart[style*="width: ${size}px"]::after {
+                    width: ${size}px;
+                    height: ${size}px;
+                }
+                .heart[style*="width: ${size}px"]::before { top: -${halfSize}px; }
+                .heart[style*="width: ${size}px"]::after { left: ${halfSize}px; }
+            `;
+            document.head.appendChild(style);
+            heartsContainer.appendChild(heart);
+            setTimeout(() => { heart.remove(); style.remove(); }, 15000);
+        }
+
+        setInterval(createHeart, 250);
+        
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createHeart, i * 100);
+        }
+
+        // Initialize flower animation
+        setTimeout(() => {
+            const flowersGarden = document.querySelector('.flowers-garden');
+            if (flowersGarden) {
+                flowersGarden.classList.remove('not-loaded');
+            }
+        }, 1000);
+        
+        // Family toggle function
+        function toggleFamily() {
+            const groomContent = document.getElementById('groom-family');
+            const brideContent = document.getElementById('bride-family');
+            const switchInput = document.getElementById('familySwitch');
+            
+            if (switchInput.checked) {
+                brideContent.classList.add('active');
+                groomContent.classList.remove('active');
+            } else {
+                groomContent.classList.add('active');
+                brideContent.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

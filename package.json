@@ -1,0 +1,63 @@
+{
+  "name": "wedding-website-template",
+  "version": "1.0.0",
+  "description": "A secure, scalable wedding website with guest management, RSVP system, and automated invitation delivery built on AWS serverless architecture",
+  "main": "index.html",
+  "scripts": {
+    "start": "node guest-invitation-system.js",
+    "invite": "node guest-invitation-system.js",
+    "api": "node api-server.js",
+    "dev": "python3 -m http.server 3000",
+    "dev:api": "node api-server.js",
+    "dev:serverless": "serverless offline",
+    "deploy": "serverless deploy",
+    "deploy:prod": "serverless deploy --stage prod",
+    "remove": "serverless remove",
+    "logs": "serverless logs -f api",
+    "export": "node excel-export.js complete",
+    "export:guests": "node excel-export.js guests",
+    "export:rsvps": "node excel-export.js rsvps",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "rsvp",
+    "aws",
+    "serverless",
+    "lambda",
+    "rds",
+    "postgresql"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.901.0",
+    "@aws-sdk/client-translate": "^3.917.0",
+    "@vercel/analytics": "^1.5.0",
+    "aws-sdk": "^2.1490.0",
+    "axios": "^1.12.2",
+    "cheerio": "^1.1.0",
+    "dotenv": "^16.3.1",
+    "exceljs": "^4.4.0",
+    "fast-glob": "^3.3.3",
+    "glob": "^11.0.3",
+    "jsdom": "^27.0.1",
+    "nodemailer": "^7.0.9",
+    "pg": "^8.11.3",
+    "twilio": "^4.23.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "serverless": "^3.38.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-offline": "^13.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/wedding-website-template"
+  }
+}

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lorem Ipsum - #LoremIpsum</title>
+
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Open+Sans:wght@300;400;600&family=Noto+Sans+Devanagari:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root { --scroll-offset: 140px; }
+
+    /* ===== Page hero (tabs kept) ===== */
+    .events-hero {
+      position: relative;
+      padding: clamp(64px, 12vw, 120px) 0 36px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      text-align: center;
+    }
+    .hero-tabs-sticky {
+      position: fixed;
+      top: 100px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      padding: 0.8rem 0;
+      box-shadow: 0 2px 10px rgba(122,73,136,0.15);
+      backdrop-filter: blur(10px);
+    }
+    .hero-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: #7A4988;
+      margin: 0 0 .4rem;
+    }
+    .hero-subtitle {
+      color: #666;
+      max-width: 720px;
+      margin: 0 auto 1.2rem;
+    }
+    .hero-tabs {
+      display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap;
+    }
+    .hero-tab {
+      border: 2px solid #E0AFFF;
+      background: #fff;
+      padding: .6rem 1.2rem;
+      border-radius: 999px;
+      font-weight: 700;
+      color: #7A4988;
+      cursor: pointer;
+      transition: all .2s ease;
+      font-size: .95rem;
+    }
+    .hero-tab:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(182,95,207,.25); }
+    .hero-tab.is-active {
+      background: linear-gradient(135deg, #E0AFFF, #d090ff);
+      color: #fff; border-color: #d090ff;
+    }
+
+    /* ===== Curtain Stage Sections ===== */
+    .stage {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      overflow: hidden;
+      isolation: isolate;
+      scroll-margin-top: var(--scroll-offset);
+    }
+    .stage::before {
+      /* Background image via inline style --bg:url(...) */
+      content:"";
+      position:absolute; inset:0;
+      background: var(--bg) center top/cover no-repeat;
+      filter: saturate(1.05) contrast(1.05);
+      transform: scale(1.04);
+      z-index: 0;
+    }
+    .stage::after{
+      /* Lavender gradient veil for readability */
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(36,16,44,.55), rgba(36,16,44,.30) 40%, rgba(36,16,44,.65));
+      z-index: 0;
+    }
+
+    /* Curtains */
+    .curtain {
+      position:absolute; inset:0; pointer-events:none; z-index: 2;
+      display:flex;
+    }
+    .curtain .panel {
+      flex:1 1 50%;
+      background: linear-gradient(135deg, #7A4988, #B65FCF);
+      opacity:.92;
+      box-shadow: inset 0 -40px 80px rgba(0,0,0,.35);
+      transform: translateX(0);
+      transition: transform .9s cubic-bezier(.2,.7,.2,1);
+    }
+    .curtain .panel.left  { border-right: 1px solid rgba(255,255,255,.2); }
+    .curtain .panel.right { border-left:  1px solid rgba(255,255,255,.2); }
+
+    /* When revealed */
+    .stage.revealed .curtain .panel.left  { transform: translateX(-100%); }
+    .stage.revealed .curtain .panel.right { transform: translateX( 100%); }
+
+    /* Content card */
+    .stage .content {
+      position: relative;
+      z-index: 3;
+      width: min(1000px, 92vw);
+      background: rgba(30,15,40,.55);
+      border: 1px solid rgba(224,175,255,.45);
+      border-radius: 20px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+      transform: translateY(18px) scale(.98);
+      opacity: 0;
+      transition: transform .6s ease .15s, opacity .6s ease .15s;
+    }
+    .stage.revealed .content { transform: translateY(0) scale(1); opacity: 1; }
+
+    .media {
+      height: 280px; background: linear-gradient(135deg, #B65FCF, #7A4988); position:relative; overflow:hidden;
+    }
+    .media img {
+      width:100%; height:100%; object-fit:contain; object-position: center top; display:block;
+      border-radius: 16px;
+    }
+    .badge {
+      position:absolute; top:12px; right:12px;
+      padding:.45rem .8rem; border-radius:999px; font-weight:800; font-size:.85rem;
+      background: rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.45); backdrop-filter: blur(6px);
+    }
+    .body {
+      padding: 18px 18px 22px;
+      text-align: center;
+    }
+    .title {
+      font-family:'Dancing Script', cursive;
+      font-size: clamp(1.8rem,4.5vw,2.8rem);
+      margin: .2rem 0 .3rem;
+      display:flex; gap:.5rem; align-items:center; justify-content:center;
+    }
+    .chips {
+      display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap;
+      margin:.6rem 0 1rem;
+    }
+    .chip {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.4);
+      color:#fff; padding:.35rem .75rem; border-radius:999px; font-weight:700; font-size:.9rem;
+      backdrop-filter: blur(4px);
+    }
+    .desc { color:#eee; opacity:.95; line-height:1.7; max-width:70ch; margin: 0 auto 1rem; }
+    .loc  { font-weight:700; margin-top:.3rem; }
+    .addr { opacity:.95; margin-top:.15rem; }
+
+    .btns { display:flex; gap:.8rem; justify-content:center; margin-top:1.1rem; }
+    .map-btn {
+      display:inline-flex; gap:.55rem; align-items:center; justify-content:center;
+      background: linear-gradient(135deg, #E0AFFF, #d090ff);
+      color:#fff; padding:.85rem 1.3rem; border-radius:999px; font-weight:800; text-decoration:none;
+      box-shadow: 0 10px 30px rgba(122,73,136,.4);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .map-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(182,95,207,.5); }
+
+
+
+    /* Section separator */
+    .wave { height:80px; background: radial-gradient(120% 60px at 50% -10px, rgba(182,95,207,.25), transparent 70%); }
+
+    @media (max-width: 768px){
+      .media { height: 300px; }
+      .body  { padding: 16px 14px 18px; }
+    }
+
+    /* Floating RSVP Button */
+    .rsvp-floating-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #E0AFFF, #B65FCF);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 8px 25px rgba(182, 95, 207, 0.4);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    .rsvp-floating-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(182, 95, 207, 0.6);
+    }
+    .rsvp-icon {
+      font-size: 1.2rem;
+    }
+    @media (max-width: 768px) {
+      .rsvp-floating-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hearts Waterfall Container -->
+  <div class="hearts-container"></div>
+
+  <!-- Floating RSVP Button -->
+  <button class="rsvp-fab" onclick="window.rsvpUI && window.rsvpUI.show()" style="display:none;">RSVP ✉️</button>
+
+  <main style="padding-top: 100px;">
+    <!-- Sticky Navigation (kept) -->
+    <nav class="sticky-nav show" id="stickyNav" aria-label="Primary">
+      <div class="hero-nav-inner">
+        <div class="hero-nav-left">
+          <a href="index.html" class="brand-link" onclick="handleBrandClick(event)">
+            <img src="logo-gif.gif" alt="Wedding Logo" class="nav-logo-gif">
+            <h1 class="brand-title">#LoremIpsum</h1>
+          </a>
+        </div>
+        <div class="hero-nav-center">
+          <ul class="hero-nav-list">
+            <li><a class="hero-nav-link" href="index.html" onclick="handleHomeClick(event)">Home</a></li>
+            <li><a class="hero-nav-link" href="family.html">Family</a></li>
+            <li class="access-required" data-access="guest" style="display:none;">
+              <a class="hero-nav-link is-active" href="event-details.html">Event Details</a>
+            </li>
+
+            <li class="access-required" data-access="admin" style="display:none;">
+              <a class="hero-nav-link" href="admin-guests.html">Admin</a>
+            </li>
+            <li class="mobile-only-item access-code-item" style="display:none;">
+              <button onclick="pageAccess.showAuthModal(); toggleMobileMenu(); return false;">Enter Invite Code</button>
+            </li>
+          </ul>
+          <div class="mobile-menu-toggle" onclick="toggleMobileMenu()"><span></span><span></span><span></span></div>
+        </div>
+        <div class="hero-nav-right">
+          <button class="invite-code-btn access-code-item" onclick="pageAccess.showAuthModal(); return false;">
+            Enter Invite Code
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page hero with event tabs -->
+    <section class="events-hero">
+      <h1 class="hero-title">Event Details</h1>
+      <p class="hero-subtitle">Join us in celebrating our special moments</p>
+      <div class="hero-tabs" role="tablist" aria-label="Event filters">
+        <button class="hero-tab" data-filter="haldi"   role="tab">Haldi</button>
+        <button class="hero-tab" data-filter="sangeet" role="tab">Sangeet</button>
+        <button class="hero-tab" data-filter="wedding" role="tab">Wedding</button>
+      </div>
+    </section>
+
+    <!-- Curtain stages inserted here -->
+    <div id="stagesRoot"></div>
+    <div class="wave" aria-hidden="true"></div>
+  </main>
+
+  <footer class="footer">
+    <!-- Flowers (kept) -->
+    <div class="flowers-garden not-loaded">
+      <div class="flowers">
+        <div class="flower flower--1">
+          <div class="flower__leafs flower__leafs--1">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+            <div class="flower__line__leaf flower__line__leaf--5"></div>
+            <div class="flower__line__leaf flower__line__leaf--6"></div>
+          </div>
+        </div>
+        <div class="flower flower--2">
+          <div class="flower__leafs flower__leafs--2">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+        <div class="flower flower--3">
+          <div class="flower__leafs flower__leafs--3">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-content">
+      <p class="copyright">&copy; 2025 Lorem & Ipsum Dolor. All rights reserved.</p>
+      <p class="made-with">Made with and for ❤️ by Lorem</p>
+    </div>
+  </footer>
+
+  <!-- Site scripts -->
+  <script src="animated-favicon.js"></script>
+  <script src="secure-auth.js"></script>
+  <script src="rsvp-ui.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    // Mobile menu toggle (kept)
+    function toggleMobileMenu() {
+      const navCenter = document.querySelector('.hero-nav-center');
+      const menuToggle = document.querySelector('.mobile-menu-toggle');
+      navCenter.classList.toggle('mobile-menu-open');
+      menuToggle.classList.toggle('active');
+    }
+    // Flowers on
+    const flowersGarden = document.querySelector('.flowers-garden');
+    if (flowersGarden) flowersGarden.classList.remove('not-loaded');
+
+    // Hearts Waterfall Effect (kept)
+    (function hearts(){
+      const heartsContainer = document.querySelector('.hearts-container');
+      if (!heartsContainer) return;
+      function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = (Math.random() * window.innerWidth) + 'px';
+        heart.style.animationDelay = '-' + (Math.random() * 5) + 's';
+        const size = Math.floor(Math.random()*20)+10;
+        heart.style.width = size + 'px';
+        heart.style.height = size + 'px';
+        const half = size/2; const style = document.createElement('style');
+        style.textContent = `
+          .heart[style*="width: ${size}px"]::before,
+          .heart[style*="width: ${size}px"]::after { width:${size}px; height:${size}px; }
+          .heart[style*="width: ${size}px"]::before { top:-${half}px; }
+          .heart[style*="width: ${size}px"]::after { left:${half}px; }
+        `;
+        document.head.appendChild(style);
+        heartsContainer.appendChild(heart);
+        heart.addEventListener('animationiteration', () => { if (Math.random()>0.9){ heart.remove(); style.remove(); }});
+        setTimeout(() => { if (heart.parentNode){ heart.remove(); style.remove(); }}, 15000);
+      }
+      setInterval(createHeart, 250);
+      for (let i=0;i<15;i++) setTimeout(createHeart, i*100);
+    })();
+
+    // ===== Event data (same content & images) =====
+    const EVENTS = [
+      {
+        id: 'haldi',
+        name: 'Haldi',
+        emoji: '🌼',
+        date: '',
+        time: 'Morning Ceremony',
+        dressCode: 'Yellow Attire',
+        description: 'Join us for the vibrant Haldi ceremony, a beautiful pre-wedding ritual where turmeric paste is applied to the bride and groom for blessings and good luck. This joyous occasion is filled with laughter, music, and the warm glow of family traditions!',
+        location: 'Venue Name',
+        locationAddress: 'Venue Address',
+        mapLink: '#',
+        image: 'https://i.pinimg.com/736x/f1/00/7f/f1007f7eb0c3eb831a2765c2a2d24b2e.jpg'
+      },
+      {
+        id: 'sangeet',
+        name: 'Sangeet',
+        emoji: '🎵',
+        date: '',
+        time: 'Evening Celebration',
+        dressCode: 'Festive Indian Wear',
+        description: 'Get ready to dance the night away at our Sangeet! An evening filled with music, dance performances, and celebration as both families come together to share in the joy and excitement of the upcoming wedding!',
+        location: 'Venue Name',
+        locationAddress: 'Venue Address',
+        mapLink: '#',
+        image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800'
+      },
+      {
+        id: 'wedding',
+        name: 'Wedding',
+        emoji: '💒',
+        date: '',
+        time: 'Ceremony & Reception',
+        dressCode: 'Formal Indian Attire',
+        description: 'Join us as we exchange vows and begin our journey together! The wedding ceremony will be followed by a grand reception with dinner, dancing, and celebration. We can\'t wait to share this special moment with all of you!',
+        location: 'Venue Name',
+        locationAddress: 'Venue Address',
+        mapLink: '#',
+        image: 'https://mir-s3-cdn-cf.behance.net/projects/404/49cf72145937979.Y3JvcCwyNDgyLDE5NDEsMCwxMDEz.jpg'
+      }
+    ];
+
+    // ===== Access helpers =====
+    function getUserEventAccess() {
+      const s = localStorage.getItem('wedding_user_info');
+      if (!s) return [];
+      try {
+        const u = JSON.parse(s);
+        if (u.permissions && u.permissions.includes('admin')) return ['haldi','sangeet','wedding'];
+        return u.eventAccess || [];
+      } catch { return []; }
+    }
+    function getAccessibleEvents() {
+      const allowed = getUserEventAccess();
+      return EVENTS.filter(e => allowed.includes(e.id));
+    }
+
+    // ===== Render curtain stages =====
+    function stageHTML(e){
+      return `
+        <section class="stage" data-event-id="${e.id}" style="--bg:url('${e.image.replace(/"/g,'&quot;')}')">
+          <div class="curtain">
+            <div class="panel left"></div>
+            <div class="panel right"></div>
+          </div>
+
+          <article class="content">
+            <div class="media">
+              <img src="${e.image}" alt="${e.name}">
+              <span class="badge">${e.name}</span>
+            </div>
+            <div class="body">
+              <h2 class="title">${e.emoji} ${e.name}</h2>
+              <div class="chips">
+                <span class="chip">${e.date}</span>
+                <span class="chip">${e.time}</span>
+                <span class="chip">${e.dressCode}</span>
+              </div>
+              <p class="desc">${e.description}</p>
+              <div class="loc">${e.location}</div>
+              <div class="addr">${e.locationAddress}</div>
+              <div class="btns">
+                <a class="map-btn" href="${e.mapLink}" target="_blank" rel="noopener"><span>📍</span><span>Get Directions</span></a>
+              </div>
+            </div>
+          </article>
+        </section>
+      `;
+    }
+
+    function renderStages() {
+      const root = document.getElementById('stagesRoot');
+      const events = getAccessibleEvents();
+      if (!events.length){
+        root.innerHTML = `
+          <div style="text-align:center; padding:4rem 1rem; color:#666;">
+            <h3 style="font-family:'Dancing Script',cursive; font-size:2rem; color:#B65FCF; margin:.25rem 0 1rem;">
+              No Events Available
+            </h3>
+            <p>Please enter your invite code to view event details.</p>
+          </div>`;
+        return [];
+      }
+      root.innerHTML = events.map(stageHTML).join('') + `<div class="wave" aria-hidden="true"></div>`;
+      
+      // Apply translation to newly rendered content
+      }
+      
+      return events.map(e=>e.id);
+    }
+
+    // ===== Curtain reveal helpers =====
+    function setRevealed(targetSection) {
+      document.querySelectorAll('.stage').forEach(sec => {
+        sec.classList.toggle('revealed', sec === targetSection);
+      });
+    }
+
+    function mostVisibleSection() {
+      const sections = Array.from(document.querySelectorAll('.stage'));
+      let best = null, bestScore = 0;
+      const vw = window.innerWidth, vh = window.innerHeight;
+      sections.forEach(sec => {
+        const r = sec.getBoundingClientRect();
+        const ix = Math.max(0, Math.min(r.right, vw) - Math.max(r.left, 0));
+        const iy = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+        const score = ix * iy;
+        if (score > bestScore) { bestScore = score; best = sec; }
+      });
+      return best;
+    }
+
+    let hasInteracted = false;
+
+    function setupCurtains() {
+      const sections = document.querySelectorAll('.stage');
+      sections.forEach(s => s.classList.remove('revealed'));
+    }
+
+    // Works reliably on Android for repeated clicks
+    function scrollToSection(target) {
+      if (!target) return;
+
+      const tabs = document.querySelector('.hero-tabs');
+      // When tabs are in sticky/fixed state, use their height as offset
+      const isSticky = tabs && (tabs.classList.contains('hero-tabs-sticky') || getComputedStyle(tabs).position === 'fixed');
+      const offset = isSticky ? (tabs.offsetHeight + 20) : 120;
+
+      // Tell CSS where to stop the scroll
+      document.documentElement.style.setProperty('--scroll-offset', offset + 'px');
+
+      // Make the target focusable so Android never drops the programmatic scroll
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+
+      // Let the "reveal" repaint, then request the scroll
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          // Primary: smooth scroll
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          // Fallback: if Android ignores smooth, force a non-smooth jump shortly after
+          setTimeout(() => {
+            const rect = target.getBoundingClientRect();
+            // Only jump if we're still not near the target
+            if (Math.abs(rect.top) > 8) {
+              target.scrollIntoView({ behavior: 'auto', block: 'start' });
+            }
+          }, 450);
+        }, 30);
+      });
+    }
+
+
+
+    function setupTabs(allowedIds){
+      const tabs = Array.from(document.querySelectorAll('.hero-tab'));
+      const tabsContainer = document.querySelector('.hero-tabs');
+      
+      // hide tabs the user can't access
+      tabs.forEach(btn => {
+        if (!allowedIds.includes(btn.dataset.filter)) btn.style.display = 'none';
+      });
+
+      function setActive(btn) {
+        tabs.forEach(b => b.classList.remove('is-active'));
+        if (btn) btn.classList.add('is-active');
+      }
+
+      tabs.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const id = btn.dataset.filter;
+          const target = document.querySelector(`.stage[data-event-id="${id}"]`);
+          if (!target) return;
+
+          hasInteracted = true;
+          setActive(btn);
+          
+          document.querySelectorAll('.stage').forEach(s => s.classList.remove('revealed'));
+          target.classList.add('revealed');
+          
+          scrollToSection(target);
+        });
+      });
+
+      // Make tabs sticky on scroll
+      const heroSection = document.querySelector('.events-hero');
+      if (heroSection) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (!entry.isIntersecting) {
+              tabsContainer.classList.add('hero-tabs-sticky');
+            } else {
+              tabsContainer.classList.remove('hero-tabs-sticky');
+            }
+          },
+          { threshold: 0, rootMargin: '-100px 0px 0px 0px' }
+        );
+        observer.observe(heroSection);
+      }
+    }
+
+    // Reveal + scroll utility
+    function revealAndScroll(eventId) {
+      const tab = document.querySelector(`.hero-tab[data-filter="${eventId}"]`);
+      const target = document.querySelector(`.stage[data-event-id="${eventId}"]`);
+      if (!tab || !target) return;
+
+      document.querySelectorAll('.hero-tab').forEach(b => b.classList.remove('is-active'));
+      tab.classList.add('is-active');
+
+      document.querySelectorAll('.stage').forEach(s => s.classList.remove('revealed'));
+      target.classList.add('revealed');
+
+      scrollToSection(target);
+    }
+
+    // Deep-link handler
+    function handleDeepLink() {
+      const params = new URLSearchParams(location.search);
+      const hash = (location.hash || '').replace('#','').trim();
+      const fromQuery = params.get('event');
+      const eventId = (fromQuery || hash || '').toLowerCase();
+      if (!eventId) return;
+
+      const allowed = Array.from(document.querySelectorAll('.stage')).map(s => s.dataset.eventId);
+      if (allowed.includes(eventId)) revealAndScroll(eventId);
+    }
+
+    // ===== Init =====
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // Auth required
+      if (!localStorage.getItem('wedding_user_info')) {
+        window.location.href = 'index.html'; return;
+      }
+      const ids = renderStages();
+      setupCurtains();
+      setupTabs(ids);
+      handleDeepLink();
+      
+      // Apply translation if Hindi is selected
+      }
+    });
+
+    window.addEventListener('hashchange', handleDeepLink);
+
+    // Re-render on auth change
+    window.addEventListener('storage', (e)=>{
+      if (e.key === 'wedding_user_info' || e.key === 'wedding_auth_token'){
+        const ids = renderStages();
+        setupCurtains();
+        setupTabs(ids);
+        
+        // Apply translation if Hindi is selected
+        }
+      }
+    });
+  </script>
+</body>
+</html>
